@@ -1,0 +1,14 @@
+<ion-content class="ion-padding">
+    <app-gestion-custom
+        [dataInput]="categorias"
+        [actions]="actions"
+        [columns]="columnas"
+        generoEliminar="la"
+        tipoSingular="categoria"
+        tituloSingular="categoria"
+        tipoPlural="categorías"
+        tituloPlural="categorías"
+        (eliminar)="onEliminar($event)"
+    >
+    </app-gestion-custom>
+</ion-content>
