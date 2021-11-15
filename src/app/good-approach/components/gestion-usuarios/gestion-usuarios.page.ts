@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
 import { Actions } from 'src/app/models/classes/actions.model';
 import { EliminarRow } from 'src/app/models/interfaces/eliminiar-row.interface';
 import { Usuario } from 'src/app/models/interfaces/usuario.interface';
-import { UsuarioService } from 'src/app/services/usuario.service';
-import { showToast } from '../../../utils/helpers';
+import { ToastController } from '../../../services/toast.controller';
 import { AdministradorService } from '../../../services/administrador.service';
-import { Roles } from 'src/app/models/enums/roles.enum';
+import { showToast } from '../../../utils/helper';
+import { Roles } from '../../../models/enums/roles.enum';
 
 @Component({
   selector: 'app-gestion-usuarios',
@@ -48,17 +47,16 @@ export class GestionUsuariosPage implements OnInit {
         callback: this.desbloquearUsuario,
       },
     ];
-  }
-
-  ionViewWillEnter() {
     this.getUsuarios();
   }
+
 
   getUsuarios() {
     this.administradorService
       .getUsuarios(Roles.UsuarioComun)
       .subscribe((usuarios) => (this.usuarios = usuarios));
   }
+
   async onEliminar(data: EliminarRow) {
     if (data.elimino) {
       this.administradorService.deleteUsuario(data.id).subscribe(async () => {

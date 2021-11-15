@@ -1,31 +1,30 @@
-<ion-content>
-  <ion-card class="ion-padding" class="ion-margin">
-
-
-    <ion-list>
-
-      <ng-container *ngFor="let configurarNotificacion of configurarNotificaciones">
-        <ion-title class="ion-padding"> {{ getTitle( configurarNotificacion.titulo ) }} </ion-title>
+<div class="row row-mt-10">
+  <div class="col-xs-12 col-p-rl-30">
+    <div class="box">
+      <ng-container
+        *ngFor="let configurarNotificacion of configurarNotificaciones"
+      >
+        <ion-title class="ion-padding">
+          {{ getTitle( configurarNotificacion.titulo ) }}
+        </ion-title>
         <ion-item>
           <ion-label>Notificaciones push</ion-label>
-          <ion-toggle [(ngModel)]="configurarNotificacion.recibePorPush"
+          <ion-toggle
+            [(ngModel)]="configurarNotificacion.recibePorPush"
             (ionChange)="configurarNotificacion.callback( configurarNotificacion, configurarNotificacion.id )"
-            slot="start"></ion-toggle>
+            slot="start"
+          ></ion-toggle>
         </ion-item>
 
         <ion-item>
           <ion-label>Notificaciones por email </ion-label>
-          <ion-toggle [(ngModel)]="configurarNotificacion.recibePorMail"
+          <ion-toggle
+            [(ngModel)]="configurarNotificacion.recibePorMail"
             (ionChange)="configurarNotificacion.callback(  configurarNotificacion, configurarNotificacion.id )"
-            slot="start"></ion-toggle>
+            slot="start"
+          ></ion-toggle>
         </ion-item>
-
-
       </ng-container>
-
-
-    </ion-list>
-
-  </ion-card>
-
-</ion-content>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  url: 'https://servify-be-staging.herokuapp.com',
+  pageSize: 100
 };

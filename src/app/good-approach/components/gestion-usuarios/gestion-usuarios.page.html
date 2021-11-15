@@ -1,15 +1,11 @@
-<ion-content class="ion-padding">
-  <app-gestion-custom
-    [dataInput]="usuarios"
-    [actions]="actions"
-    [columns]="columnas"
-    [actionsHeader]="actionsHeader"
-    [renderAgregar]="false"
-    generoEliminar="el"
-    tipoSingular="usuario"
-    tituloSingular="usuario"
-    tipoPlural="usuarios"
-    (eliminar)="onEliminar($event)"
-  >
-  </app-gestion-custom>
-</ion-content>
+<app-gestion-custom
+  [dataInput]="usuarios"
+  [actions]="actions"
+  [columns]="columnas"
+  [actionsHeader]="actionsHeader"
+  tipoSingular="usuario"
+  tituloSingular="usuario"
+  tipoPlural="usuarios"
+  (eliminar)="onEliminar($event)"
+>
+</app-gestion-custom>

@@ -1,27 +1,36 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
-import { confirmacionUsuario } from '@utils/sweet-alert';
-import { Actions } from '../../../core/model/actions.model';
-import { EliminarRow } from '../../../core/model/eliminiar-row.interface';
+import { Actions } from 'src/app/models/classes/actions.model';
+import { EliminarRow } from 'src/app/models/interfaces/eliminiar-row.interface';
+import { confirmacionUsuario } from 'src/app/utils/sweet-alert';
 import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-gestion-custom',
   templateUrl: './gestion-custom.component.html',
-  styleUrls: ['./gestion-custom.component.scss']
+  styleUrls: ['./gestion-custom.component.scss'],
 })
 export class GestionCustomComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   // tslint:disable-next-line: no-input-rename
-  @Input('columns') displayedColumns: string[];
+  @Input() columns: string[];
   @Input() dataInput: {}[] = [];
   @Input() tituloPlural: string;
   @Input() tituloSingular: string;
   @Input() tipoSingular: string;
+  @Input() tipoPlural: string;
   @Input() puedeAgregar = true;
 
   @Input() actionsHeader: Actions[] = null;
@@ -39,7 +48,6 @@ export class GestionCustomComponent implements OnInit {
   // Test paginator
   pageSize = environment.pageSize;
 
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -54,46 +62,47 @@ export class GestionCustomComponent implements OnInit {
   buttonClick = (fun) => this.callback.emit(fun);
 
   ngOnChanges(value: SimpleChanges) {
-    this.displayedColumns =
-      value.displayedColumns && value.displayedColumns.currentValue
-        ? value.displayedColumns.currentValue
-        : this.displayedColumns;
-    this.dataInput =
-      value.dataInput && value.dataInput.currentValue
-        ? value.dataInput.currentValue
-        : this.dataInput;
-    this.tituloPlural =
-      value.tituloPlural && value.tituloPlural.currentValue
-        ? value.tituloPlural.currentValue
-        : this.tituloPlural;
+    const {
+      columns,
+      dataInput,
+      tituloPlural,
+      tipoSingular,
+      actions,
+      actionsHeader,
+    } = value;
+    this.columns = columns?.currentValue ? columns.currentValue : this.columns;
+    this.dataInput = dataInput?.currentValue
+      ? dataInput.currentValue
+      : this.dataInput;
+    this.tituloPlural = tituloPlural?.currentValue
+      ? tituloPlural.currentValue
+      : this.tituloPlural;
 
-    this.tipoSingular =
-      value.tipoSingular && value.tipoSingular.currentValue
-        ? value.tipoSingular.currentValue
-        : this.tipoSingular;
+    this.tipoSingular = tipoSingular?.currentValue
+      ? tipoSingular.currentValue
+      : this.tipoSingular;
 
-    if (value.actions) {
+    if (actions) {
       this.actions =
-        value.actions.currentValue && value.actions.firstChange
-          ? value.actions.currentValue
+        actions.currentValue && actions.firstChange
+          ? actions.currentValue
           : this.getActionsDefault();
     } else if (!this.actions) {
       this.actions = this.getActionsHeaderDefault();
     }
 
-    if (value.actionsHeader) {
+    if (actionsHeader) {
       this.actionsHeader =
-        value.actionsHeader.currentValue && value.actionsHeader.firstChange
-          ? value.actionsHeader.currentValue
+        actionsHeader.currentValue && actionsHeader.firstChange
+          ? actionsHeader.currentValue
           : this.getActionsHeaderDefault();
     } else if (!this.actionsHeader) {
       this.actionsHeader = this.getActionsHeaderDefault();
     }
 
-    this.dataInput =
-      value.dataInput && value.dataInput.currentValue
-        ? value.dataInput.currentValue
-        : this.dataInput;
+    this.dataInput = dataInput?.currentValue
+      ? value.dataInput.currentValue
+      : this.dataInput;
 
     this.setDataSource();
   }
@@ -112,7 +121,7 @@ export class GestionCustomComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
 
-    this.updatedDataInput.emit( this.dataSource.filteredData );
+    this.updatedDataInput.emit(this.dataSource.filteredData);
   }
 
   getActionsHeaderDefault = (): Actions[] => [
@@ -170,9 +179,6 @@ export class GestionCustomComponent implements OnInit {
           `Está seguro que desea eliminar el ${this.tipoSingular}?`
         ).then((confirm) => {
           if (confirm.isConfirmed) {
-            /*
-            Habría que ver como se soluciona esto.
-            */
             this.eliminar.emit({ elimino: true, id: rowData.id });
           }
         });
@@ -185,8 +191,9 @@ export class GestionCustomComponent implements OnInit {
   }
 
   styleObject(action: Actions): Object {
-
-    const style: { backgroundColor?, color?, borderRadius? } = { color: '#fff' };
+    const style: { backgroundColor?; color?; borderRadius? } = {
+      color: '#fff',
+    };
     style.backgroundColor = action.backgroundColor;
     style.color = action.color;
     return style;

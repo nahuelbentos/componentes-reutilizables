@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioComunService } from '../../../services/usuario-comun.service';
-import { AuthService } from '../../../services/auth.service';
 import { ConfigurarNotificacion } from '../../../models/interfaces/configurar-notificacion.interface';
-import { TipoNotificacion } from '../../../models/enums/tipo-notificacion.enum';
-import { catchError } from 'rxjs/operators';
-import { Platform } from '@ionic/angular';
-import { getIsDesktop } from '../../../utils/helpers';
+import { Platform } from '@angular/cdk/platform';
+import { TipoNotificacion } from 'src/app/models/enums/tipo-notificacion.enum';
+import { AuthService } from 'src/app/services/auth.service';
+import { UsuarioComunService } from '../../../services/usuario-comun.service';
+import { getIsDesktop } from '../../../utils/helper';
 
 @Component({
     selector: 'app-configurar-notificaciones',
@@ -48,3 +47,4 @@ export class ConfigurarNotificacionesPage implements OnInit {
 
     getTitle = (title: string) => this.isDesktop ? title : `${title.substr(32, 1).toLocaleUpperCase()}${title.substring(33,title.length)}`;
 }
+
